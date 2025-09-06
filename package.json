@@ -1,9 +1,13 @@
 {
   "name": "mini-plataforma-videos",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
+  "type": "commonjs",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
   },
   "repository": {
     "type": "git",
@@ -16,8 +20,8 @@
     "url": "https://github.com/annacoutinho/mini-plataforma-videos/issues"
   },
   "homepage": "https://github.com/annacoutinho/mini-plataforma-videos#readme",
-  "description": "",
   "dependencies": {
+    "dotenv": "^17.2.2",
     "express": "^5.1.0"
   },
   "devDependencies": {
