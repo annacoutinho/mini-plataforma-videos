@@ -1,19 +1,34 @@
-import { Router } from "express";
-import { InMemoryVideoRepository } from "../../infra/db/InMemoryVideoRepository";
-import { VideoPresenter } from "../presenters/video.presenter";
+import { Router } from 'express'
+import type { Video } from '../../domain/entities/Video'
+import { InMemoryVideoRepository } from '../../infra/db/InMemoryVideoRepository'
 
-const videosRouter = Router();
-const repo = new InMemoryVideoRepository();
+const videosRouter = Router()
+const videoRepo = new InMemoryVideoRepository()
 
-videosRouter.get("/videos", async (_req, res) => {
-  const list = await repo.listAll();
-  return res.json(list.map(VideoPresenter.toHTTP));
-});
+function toVideoDTO(videoEntity: Video) {
+  return {
+    id: videoEntity.id,
+    title: videoEntity.title,
+    description: videoEntity.description,
+    providerUrl: videoEntity.providerUrl,
+    createdAt: videoEntity.createdAt.toISOString(),
+  }
+}
 
-videosRouter.get("/videos/:id", async (req, res) => {
-  const video = await repo.findById(req.params.id);
-  if (!video) return res.status(404).json({ error: "Vídeo não encontrado" });
-  return res.json(VideoPresenter.toHTTP(video));
-});
+videosRouter.get('/videos', async (_req, res) => {
+  const videos = await videoRepo.listAll()
+  return res.json(videos.map(toVideoDTO))
+})
 
-export default videosRouter;
+videosRouter.get('/videos/:id', async (req, res) => {
+  const { id } = req.params
+  const videoEntity = await videoRepo.findById(id)
+
+  if (!videoEntity) {
+    return res.status(404).json({ message: 'Vídeo não encontrado' })
+  }
+
+  return res.json(toVideoDTO(videoEntity))
+})
+
+export default videosRouter
