@@ -1,12 +1,13 @@
-import { Router } from 'express';
-import { InMemoryVideoRepository } from '../../infra/db/InMemoryVideoRepository';
+import { Router } from "express";
+import { InMemoryVideoRepository } from "../../infra/db/InMemoryVideoRepository";
+import { VideoPresenter } from "../presenters/video.presenter";
 
-const router = Router();
-const videoRepo = new InMemoryVideoRepository();
+const videosRouter = Router();
+const repo = new InMemoryVideoRepository();
 
-router.get('/videos', async (_req, res) => {
-  const videos = await videoRepo.listAll();
-  res.json(videos);
+videosRouter.get("/videos", async (_req, res) => {
+  const list = await repo.listAll();
+  return res.json(list.map(VideoPresenter.toHTTP));
 });
 router.get('/videos/:id', async (req, res) => {
   const { id } = req.params;
@@ -19,4 +20,10 @@ router.get('/videos/:id', async (req, res) => {
   res.json(video);
 });
 
-export default router;
+videosRouter.get("/videos/:id", async (req, res) => {
+  const video = await repo.findById(req.params.id);
+  if (!video) return res.status(404).json({ error: "Vídeo não encontrado" });
+  return res.json(VideoPresenter.toHTTP(video));
+});
+
+export default videosRouter;
