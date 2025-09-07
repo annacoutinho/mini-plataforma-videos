@@ -6,7 +6,6 @@ export default function Header() {
           <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-400">
             VideoFeedback
           </span>
-
           <span className="text-sm text-white/60">
             Assista, avalie e veja feedbacks de outros usuários
           </span>
