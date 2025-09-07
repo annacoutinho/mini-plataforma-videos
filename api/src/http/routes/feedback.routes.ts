@@ -61,13 +61,13 @@ router.get('/feedback/:videoId', async (req, res) => {
 
   const list = await feedbackRepo.listByVideoId(videoId)
   return res.json(
-    list.map(f => ({
-      id: f.id,
-      videoId: f.videoId,
-      authorName: f.authorName,
-      rating: f.rating.toNumber,
-      comment: f.comment,
-      createdAt: f.createdAt
+    list.map(feedback => ({
+      id: feedback.id,
+      videoId: feedback.videoId,
+      authorName: feedback.authorName,
+      rating: feedback.rating.toNumber,
+      comment: feedback.comment,
+      createdAt: feedback.createdAt
     }))
   )
 })

@@ -2,20 +2,20 @@ import { Video } from '../../domain/entities/Video'
 import { VideoRepository } from '../../domain/repositories/VideoRepository'
 
 const seed: Video[] = [
-  new Video({
-    id: 'v1',
-    title: 'SOLID fica FÁCIL com Essas Ilustrações',
-    description: 'Conceitos SOLID',
-    providerUrl: 'https://www.youtube.com/watch?v=6SfrO3D4dHM',
-    createdAt: new Date()
-  }),
-  new Video({
-    id: 'v2',
-    title: 'Design Patterns // Dicionário do Programador',
-    description: 'Explicação rápida e didática de design patterns.',
-    providerUrl: 'https://www.youtube.com/watch?v=J-lHpiu-Twk',
-    createdAt: new Date()
-  })
+  new Video(
+    '1',
+    'Conceito SOLID',
+    'Desvendando o SOLID de uma forma simples',
+    'https://www.youtube.com/watch?v=6SfrO3D4dHM',
+    new Date()
+  ),
+  new Video(
+    '2',
+    'Design Patterns',
+    'Explicação rápida e didática de design patterns.',
+    'https://www.youtube.com/watch?v=J-lHpiu-Twk',
+    new Date()
+  )
 ]
 
 export class InMemoryVideoRepository implements VideoRepository {
@@ -26,6 +26,6 @@ export class InMemoryVideoRepository implements VideoRepository {
   }
 
   async findById(id: string): Promise<Video | null> {
-    return this.items.find(v => v.id === id) ?? null
+    return this.items.find(video => video.id === id) ?? null
   }
 }
