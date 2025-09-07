@@ -1,13 +1,15 @@
-import { Button } from './components/ui/button'
+import Header from "./components/Header";
 
-function App() {
+export default function App() {
   return (
-    <>
-      <div className="flex min-h-svh flex-col items-center justify-center">
-        <Button>Teste</Button>
-      </div>
-    </>
-  )
+    <div className="min-h-screen bg-neutral-950 text-white">
+      <Header />
+      <main className="mx-auto max-w-6xl px-4 py-8">
+        <h1 className="text-2xl font-semibold">Bem-vindo à VideoFeedback </h1>
+        <p className="text-white/60">
+          Aqui você poderá assistir vídeos, deixar notas e visualizar feedbacks.
+        </p>
+      </main>
+    </div>
+  );
 }
-
-export default App
