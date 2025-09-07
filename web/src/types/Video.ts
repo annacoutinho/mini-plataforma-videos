@@ -1,7 +1,7 @@
-export interface Video {
+export type Video = {
   id: string;
   title: string;
   description: string;
   providerUrl: string;
-  createdAt: string;
-}
+  createdAt: string | Date;
+};

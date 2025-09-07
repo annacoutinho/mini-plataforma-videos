@@ -3,27 +3,13 @@ import { Link } from "react-router-dom";
 import { api } from "@/api";
 import type { Video } from "@/types/Video";
 
-type VideoEnvelopado<Conteudo> = { props: Conteudo };
-
-function desembrulhar<Conteudo>(valor: Conteudo | VideoEnvelopado<Conteudo>): Conteudo {
-  return "props" in (valor as VideoEnvelopado<Conteudo>)
-    ? (valor as VideoEnvelopado<Conteudo>).props
-    : (valor as Conteudo);
-}
-
 export default function Home() {
   const [listaDeVideos, setListaDeVideos] = useState<Video[]>([]);
   const [carregando, setCarregando] = useState(true);
 
   useEffect(() => {
-    api
-      .get("/videos")
-      .then((resposta) => {
-        const videosNormalizados = (resposta.data as (Video | VideoEnvelopado<Video>)[])
-          .map((video) => desembrulhar(video));
-
-        setListaDeVideos(videosNormalizados);
-      })
+    api.get<Video[]>("/videos")
+      .then((r) => setListaDeVideos(r.data))
       .finally(() => setCarregando(false));
   }, []);
 
@@ -35,14 +21,9 @@ export default function Home() {
 
       <ul className="mt-6 grid gap-4 sm:grid-cols-2">
         {listaDeVideos.map((video) => (
-          <li
-            key={video.id}
-            className="rounded-xl border border-white/10 bg-neutral-900 p-4 shadow-sm"
-          >
+          <li key={video.id} className="rounded-xl border border-white/10 bg-neutral-900 p-4">
             <h2 className="text-lg font-medium">{video.title}</h2>
-            <p className="mt-1 text-sm text-white/60 line-clamp-2">
-              {video.description}
-            </p>
+            <p className="mt-1 text-sm text-white/60 line-clamp-2">{video.description}</p>
 
             <div className="mt-3 flex gap-3">
               <Link
