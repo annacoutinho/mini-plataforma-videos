@@ -23,7 +23,7 @@ export default function PaginaDoVideo() {
     setNaoEncontrado(false);
 
     api.get<Video>(`/videos/${id}`)
-      .then((r) => setVideoAtual(r.data))
+      .then((response) => setVideoAtual(response.data))
       .catch((erro: unknown) => {
         const status = (erro as AxiosError).response?.status;
         if (status === 404) setNaoEncontrado(true);
