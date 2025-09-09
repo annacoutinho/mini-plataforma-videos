@@ -1,75 +1,72 @@
-import { Router } from 'express'
-import { v4 as uuid } from 'uuid'
+// src/routes/feedback.routes.ts
+import { NextFunction, Request, Response, Router } from 'express'
 import { z } from 'zod'
 import { Feedback } from '../../domain/entities/Feedback'
-import { Rating } from '../../domain/entities/Rating'
 import { InMemoryFeedbackRepository } from '../../infra/db/InMemoryFeedbackRepository'
 import { InMemoryVideoRepository } from '../../infra/db/InMemoryVideoRepository'
+import { FeedbackService } from '../../service/feedback.service'
 
-const router = Router()
+const feedbackRouter = Router()
+
 const feedbackRepo = new InMemoryFeedbackRepository()
 const videoRepo = new InMemoryVideoRepository()
+const service = new FeedbackService(feedbackRepo, videoRepo)
 
-router.post('/feedback', async (req, res) => {
-  const bodySchema = z.object({
-    videoId: z.string().min(1),
-    authorName: z.string().min(1, 'authorName é obrigatório'),
-    rating: z.number().int().min(1).max(5),
-    comment: z.string().min(1, 'comment é obrigatório')
-  })
+const createBodySchema = z.object({
+  videoId: z.string().min(1, 'videoId is required'),
+  authorName: z.string().min(1, 'authorName is required'),
+  rating: z.number().int().min(1).max(5),
+  comment: z.string().min(1, 'comment is required')
+})
 
-  const parsed = bodySchema.safeParse(req.body)
-  if (!parsed.success) {
-    return res.status(400).json({
-      error: 'Invalid body',
-      details: parsed.error.issues
-    })
-  }
-
-  const { videoId, authorName, rating, comment } = parsed.data
-
-  const video = await videoRepo.findById(videoId)
-  if (!video) {
-    return res.status(404).json({ error: 'Video not found' })
-  }
-
-  const feedback = new Feedback({
-    id: uuid(),
-    videoId,
-    authorName,
-    rating: Rating.create(rating),
-    comment,
-    createdAt: new Date()
-  })
-
-  await feedbackRepo.create(feedback)
-
-  return res.status(201).json({
+function toFeedbackDTO(feedback: Feedback) {
+  return {
     id: feedback.id,
     videoId: feedback.videoId,
     authorName: feedback.authorName,
-    rating: feedback.rating.toNumber,
+    rating: feedback.rating,
     comment: feedback.comment,
-    createdAt: feedback.createdAt
-  })
-})
+    createdAt: feedback.createdAt.toISOString()
+  }
+}
 
-router.get('/feedback/:videoId', async (req, res) => {
-  const { videoId } = req.params
-  const exists = await videoRepo.findById(videoId)
-  if (!exists) return res.status(404).json({ error: 'Video not found' })
+feedbackRouter.post(
+  '/feedback',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const parsed = createBodySchema.safeParse(req.body)
+      if (!parsed.success) {
+        return res.status(400).json({
+          error: 'Invalid body',
+          details: parsed.error.issues
+        })
+      }
 
-  const list = await feedbackRepo.listByVideoId(videoId)
-  return res.json(
-    list.map(feedback => ({
-      id: feedback.id,
-      videoId: feedback.videoId,
-      authorName: feedback.authorName,
-      rating: feedback.rating.toNumber,
-      comment: feedback.comment,
-      createdAt: feedback.createdAt
-    }))
-  )
-})
+      const created = await service.createFeedback(parsed.data)
+      return res.status(201).json(toFeedbackDTO(created))
+    } catch (error) {
+      if (error instanceof Error && error.message === 'Video not found') {
+        return res.status(404).json({ error: 'Video not found' })
+      }
+      return next(error)
+    }
+  }
+)
 
-export default router
+feedbackRouter.get(
+  '/feedback/:videoId',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { videoId } = req.params
+      const list = await service.getFeedbackByVideo(videoId)
+      return res.json(list.map(toFeedbackDTO))
+    } catch (error) {
+      if (error instanceof Error && error.message === 'Video not found') {
+        return res.status(404).json({ error: 'Video not found' })
+      }
+      return next(error)
+    }
+  }
+)
+
+export default feedbackRouter

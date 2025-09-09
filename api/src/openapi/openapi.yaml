@@ -1,0 +1,103 @@
+openapi: 3.0.3
+info:
+  title: Mini Plataforma - Vídeos (API)
+  version: 1.0.0
+servers:
+  - url: /
+    description: Servidor local
+
+paths:
+  /videos:
+    get:
+      summary: Lista todos os vídeos
+      tags: [Vídeos]
+      responses:
+        '200':
+          description: Lista de vídeos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Video'
+
+  /feedback:
+    post:
+      summary: Cria um feedback para um vídeo
+      tags: [Feedback]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFeedback'
+      responses:
+        '201':
+          description: Feedback criado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feedback'
+        '400':
+          description: Body inválido
+        '404':
+          description: Vídeo não encontrado
+
+  /feedback/{videoId}:
+    get:
+      summary: Lista feedbacks por vídeo
+      tags: [Feedback]
+      parameters:
+        - in: path
+          name: videoId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lista de feedbacks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Feedback'
+        '404':
+          description: Vídeo não encontrado
+
+components:
+  schemas:
+    Video:
+      type: object
+      properties:
+        id: { type: string, example: "v1" }
+        titulo: { type: string, example: "Introdução ao Projeto" }
+        url: { type: string, example: "https://example.com/1" }
+
+    Feedback:
+      type: object
+      properties:
+        id: { type: string }
+        videoId: { type: string }
+        authorName: { type: string }
+        rating:
+          type: integer
+          minimum: 1
+          maximum: 5
+        comment: { type: string }
+        createdAt:
+          type: string
+          format: date-time
+
+    CreateFeedback:
+      type: object
+      required: [videoId, authorName, rating, comment]
+      properties:
+        videoId: { type: string, example: "v1" }
+        authorName: { type: string, example: "Ana" }
+        rating:
+          type: integer
+          minimum: 1
+          maximum: 5
+          example: 5
+        comment: { type: string, example: "Muito bom!" }
