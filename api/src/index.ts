@@ -1,11 +1,11 @@
-import dotenv from 'dotenv';
-import { createServer } from './http/server';
+import dotenv from 'dotenv'
+import { createServer } from './http/server'
 
-dotenv.config();
+dotenv.config()
 
-const app = createServer();
-const PORT = process.env.PORT || 3000;
+const app = createServer()
+const PORT = process.env.PORT || 3000
 
 app.listen(PORT, () => {
-  console.log(`[HTTP] Server running on http://localhost:${PORT}`);
-});
+  console.log(`[HTTP] Server running on http://localhost:${PORT}`)
+})
