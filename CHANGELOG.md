@@ -4,6 +4,13 @@ Todas as mudanças notáveis deste projeto serão documentadas aqui.
 O formato segue um estilo próximo ao [Keep a Changelog](https://keepachangelog.com/) e versionamento semântico.
 
 ---
+## [0.3.0] - 2025-09-08
+### Added
+- Documentação automática da API com Swagger/OpenAPI disponível em `/docs`
+- Camada de **services** para organizar regras de negócio:
+ - `FeedbackService` para criação e busca de feedbacks
+ - `VideoService` para listagem e detalhamento de vídeos
+- Configuração de variáveis de ambiente (`.env`) para `PORT` e `CORS_ORIGIN`
 
 ## [0.2.0] - 2025-09-07
 ### Added
