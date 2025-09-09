@@ -1,23 +1,23 @@
-import { Video } from "../domain/entities/Video";
-import { VideoRepository } from "../domain/repositories/VideoRepository";
+import { NotFoundError } from '../core/errors'
+import { Video } from '../domain/entities/Video'
+import { VideoRepository } from '../domain/repositories/VideoRepository'
 
 export class VideoService {
-  private readonly videoRepo: VideoRepository;
+  private readonly videoRepo: VideoRepository
 
   constructor(videoRepo: VideoRepository) {
-    this.videoRepo = videoRepo;
+    this.videoRepo = videoRepo
   }
 
   async listAll(): Promise<Video[]> {
-    return this.videoRepo.listAll();
+    return this.videoRepo.listAll()
   }
 
   async getById(id: string): Promise<Video> {
-    const video = await this.videoRepo.findById(id);
+    const video = await this.videoRepo.findById(id)
     if (!video) {
-      throw new Error("Video not found");
+      throw new NotFoundError('Video not found') // ✅ em vez de Error genérico
     }
-    return video;
+    return video
   }
 }
-

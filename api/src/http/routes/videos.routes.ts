@@ -19,7 +19,6 @@ function toVideoDTO(video: Video) {
   }
 }
 
-<<<<<<< HEAD
 videosRouter.get(
   '/videos',
   async (_req: Request, res: Response, next: NextFunction) => {
@@ -29,23 +28,9 @@ videosRouter.get(
     } catch (error) {
       return next(error)
     }
-=======
-videosRouter.get('/videos', async (_req, res) => {
-  const videos = await videoRepo.listAll()
-  return res.json(videos.map(toVideoDTO))
-})
-
-videosRouter.get('/videos/:id', async (req, res) => {
-  const { id } = req.params
-  const videoEntity = await videoRepo.findById(id)
-
-  if (!videoEntity) {
-    return res.status(404).json({ message: 'Vídeo não encontrado' })
->>>>>>> main
   }
 )
 
-<<<<<<< HEAD
 videosRouter.get(
   '/videos/:id',
   async (req: Request, res: Response, next: NextFunction) => {
@@ -54,16 +39,9 @@ videosRouter.get(
       const video = await videoService.getById(id)
       return res.json(toVideoDTO(video))
     } catch (error) {
-      if (error instanceof Error && error.message === 'Video not found') {
-        return res.status(404).json({ error: 'Video not found' })
-      }
       return next(error)
     }
   }
 )
-=======
-  return res.json(toVideoDTO(videoEntity))
-})
->>>>>>> main
 
 export default videosRouter
