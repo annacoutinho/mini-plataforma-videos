@@ -69,4 +69,4 @@ Implementei com React Router, separando em páginas (Home, VideoPage, FeedbacksP
 
 - Axios
 
-Usei Axios pras chamadas HTTP. É simples, confiável e já preparado caso precise de interceptors depois (autenticação, logs, etc).
+Usei Axios pras chamadas HTTP. É simples, confiável e já preparado caso precise de interceptors depois (autenticação, logs, etc)
