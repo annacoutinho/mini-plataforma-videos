@@ -96,3 +96,8 @@ yarn dev
 ```
 
 Frontend local disponível em http://localhost:5173
+
+## Documentação adicional
+
+- [CHANGELOG.md](./CHANGELOG.md): histórico de mudanças do projeto, seguindo boas práticas de versionamento semântico.
+- [COMMENTS.md](./COMMENTS.md): registro das principais decisões técnicas tomadas durante o desenvolvimento.
