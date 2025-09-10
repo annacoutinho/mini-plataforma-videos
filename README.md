@@ -28,11 +28,10 @@ A documentação da API está disponível localmente em:
 ## Estrutura do projeto
 
 mini-plataforma-videos/
+´
 ├── api/ → Backend (Node.js + Express + Swagger)
-└── web/ → Frontend (React + Vite + TailwindCSS)
+└── web/ → Frontend (React + Vite + TailwindCSS)`
 
-yaml
-Copiar código
 
 ---
 
