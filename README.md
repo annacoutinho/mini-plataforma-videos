@@ -59,8 +59,8 @@ npm install
 # Inicie em modo desenvolvimento
 npm run dev
 ```
-# API disponível em http://localhost:3000
-# Documentação Swagger em http://localhost:3000/docs
+API local disponível em http://localhost:3000
+Documentação Swagger local em http://localhost:3000/docs
 
 Endpoints disponíveis
 
@@ -95,4 +95,4 @@ yarn install
 yarn dev
 ```
 
-Frontend disponível em http://localhost:5173
+Frontend local disponível em http://localhost:5173
