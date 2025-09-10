@@ -72,22 +72,19 @@ POST /feedback → Cria um novo feedback
 
 GET /feedback/:videoId → Lista feedbacks de um vídeo específico
 
-Frontend (Web)
-Tecnologias principais
+## Frontend (Web)
+## Tecnologias principais
 
-React 19
+- React 19
+- Vite
+- TypeScript
+- TailwindCSS
+- React Router DOM
+- Axios
 
-Vite
+## Instalação e execução local
 
-TypeScript
-
-TailwindCSS
-
-React Router DOM
-
-Axios
-
-Instalação e execução local
+```bash
 # Acesse a pasta do frontend
 cd web
 
@@ -96,5 +93,6 @@ yarn install
 
 # Inicie em modo desenvolvimento
 yarn dev
+```
 
-# Frontend disponível em http://localhost:5173
+Frontend disponível em http://localhost:5173
