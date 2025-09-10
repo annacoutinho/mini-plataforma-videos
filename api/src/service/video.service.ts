@@ -1,11 +1,12 @@
 import { NotFoundError } from '../core/errors'
 import { Video } from '../domain/entities/Video'
 import { VideoRepository } from '../domain/repositories/VideoRepository'
+import { JsonVideoRepository } from '../infra/db/json/JsonVideoRepository'
 
 export class VideoService {
   private readonly videoRepo: VideoRepository
 
-  constructor(videoRepo: VideoRepository) {
+  constructor(videoRepo: VideoRepository = new JsonVideoRepository()) {
     this.videoRepo = videoRepo
   }
 
@@ -16,7 +17,7 @@ export class VideoService {
   async getById(id: string): Promise<Video> {
     const video = await this.videoRepo.findById(id)
     if (!video) {
-      throw new NotFoundError('Video not found') // ✅ em vez de Error genérico
+      throw new NotFoundError('Video not found')
     }
     return video
   }

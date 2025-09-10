@@ -4,22 +4,29 @@ import { Feedback } from '../domain/entities/Feedback'
 import { Rating } from '../domain/entities/Rating'
 import { FeedbackRepository } from '../domain/repositories/FeedbackRepository'
 import { VideoRepository } from '../domain/repositories/VideoRepository'
+import { JsonFeedbackRepository } from '../infra/db/json/JsonFeedbackRepository'
+import { JsonVideoRepository } from '../infra/db/json/JsonVideoRepository'
+
+export type CreateFeedbackInput = {
+  videoId: string
+  authorName: string
+  rating: number
+  comment: string
+}
 
 export class FeedbackService {
   private readonly feedbackRepo: FeedbackRepository
   private readonly videoRepo: VideoRepository
 
-  constructor(feedbackRepo: FeedbackRepository, videoRepo: VideoRepository) {
+  constructor(
+    feedbackRepo: FeedbackRepository = new JsonFeedbackRepository(),
+    videoRepo: VideoRepository = new JsonVideoRepository()
+  ) {
     this.feedbackRepo = feedbackRepo
     this.videoRepo = videoRepo
   }
 
-  async createFeedback(data: {
-    videoId: string
-    authorName: string
-    rating: number
-    comment: string
-  }): Promise<Feedback> {
+  async createFeedback(data: CreateFeedbackInput): Promise<Feedback> {
     const { videoId, authorName, rating, comment } = data
 
     const video = await this.videoRepo.findById(videoId)
@@ -31,7 +38,7 @@ export class FeedbackService {
       uuid(),
       videoId,
       authorName,
-      ratingVO, // se sua entidade Feedback espera Rating, ok
+      ratingVO,
       comment,
       new Date()
     )
