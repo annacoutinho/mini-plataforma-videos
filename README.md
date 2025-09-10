@@ -96,3 +96,13 @@ yarn dev
 ```
 
 Frontend local disponível em http://localhost:5173
+
+## Configuração de Ambiente
+
+Este projeto utiliza variáveis de ambiente para configuração.  
+Um arquivo `.env.example` foi incluído como referência.
+
+### Como usar
+1. Copie o arquivo `.env.example`  
+2. Renomeie para `.env` dentro das pastas `api/` (backend) e `web/` (frontend)  
+3. Ajuste os valores se necessário para seu ambiente local
