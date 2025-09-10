@@ -58,7 +58,7 @@ npm install
 
 # Inicie em modo desenvolvimento
 npm run dev
-
+```
 # API disponível em http://localhost:3000
 # Documentação Swagger em http://localhost:3000/docs
 
