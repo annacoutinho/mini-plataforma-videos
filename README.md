@@ -1,38 +1,39 @@
 # Mini Plataforma de Vídeos
 
-Este projeto é uma aplicação fullstack composta por **backend (Node.js + Express)** e **frontend (React + Vite + TailwindCSS)**.
+Este projeto é uma aplicação fullstack composta por **backend (Node.js + Express)** e **frontend (React + Vite + TailwindCSS)**.  
 
 O objetivo é disponibilizar uma plataforma simples onde usuários possam:
-
 - Listar vídeos disponíveis  
 - Assistir aos vídeos  
 - Registrar feedbacks (nota e comentário)  
 - Visualizar feedbacks enviados por outros usuários  
 
-O frontend está hospedado em produção na Vercel:  
-[https://mini-plataforma-videos.vercel.app](https://mini-plataforma-videos.vercel.app)
+---
 
-A documentação da API está disponível localmente em:  
-[http://localhost:3000/docs](http://localhost:3000/docs)
+## Deploy em Produção
+
+- **Frontend (Vercel):**  
+  [https://mini-plataforma-videos.vercel.app](https://mini-plataforma-videos.vercel.app)
+
+- **Backend (Render + Swagger):**  
+  [https://mini-plataforma-videos.onrender.com/docs](https://mini-plataforma-videos.onrender.com/docs)
 
 ---
 
 ## Requisitos
 
 - **Node.js**: versão 20.x ou superior  
-- **npm**: versão 10.x ou superior (para o backend)  
-- **yarn**: versão 1.22.x ou superior (para o frontend)  
+- **npm**: versão 10.x ou superior (backend)  
+- **yarn**: versão 1.22.x ou superior (frontend)  
 
 ---
 
-## Estrutura do projeto
-
+## Estrutura do Projeto
 mini-plataforma-videos/
 
 ├── api/ → Backend (Node.js + Express + Swagger)
 
 └── web/ → Frontend (React + Vite + TailwindCSS)
-
 
 ---
 
@@ -47,7 +48,7 @@ mini-plataforma-videos/
 - UUID  
 - CORS  
 
-### Instalação e execução
+### Instalação e execução local
 ```bash
 # Acesse a pasta do backend
 cd api
@@ -60,7 +61,11 @@ npm run dev
 
 # API disponível em http://localhost:3000
 # Documentação Swagger em http://localhost:3000/docs
+
 Endpoints disponíveis
+
+GET /health → Health check da API
+
 GET /videos → Lista todos os vídeos
 
 POST /feedback → Cria um novo feedback
@@ -69,6 +74,7 @@ GET /feedback/:videoId → Lista feedbacks de um vídeo específico
 
 Frontend (Web)
 Tecnologias principais
+
 React 19
 
 Vite
@@ -81,9 +87,7 @@ React Router DOM
 
 Axios
 
-Instalação e execução
-bash
-Copiar código
+Instalação e execução local
 # Acesse a pasta do frontend
 cd web
 
