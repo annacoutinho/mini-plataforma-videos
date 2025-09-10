@@ -1,16 +1,34 @@
 # Changelog
 
-Todas as mudanças notáveis deste projeto serão documentadas aqui.
+Todas as mudanças notáveis deste projeto serão documentadas aqui.  
 O formato segue um estilo próximo ao [Keep a Changelog](https://keepachangelog.com/) e versionamento semântico.
 
 ---
+
+## [0.4.0] - 2025-09-09
+### Added
+- Arquivos `.env.example` para backend e frontend
+- Seção **Configuração de Ambiente** no README explicando o uso do `.env.example`
+- Endpoint `/health` documentado no README
+- Estrutura do README padronizada para frontend e backend
+
+### Changed
+- README atualizado para refletir deploy separado:
+  - **Frontend** hospedado na Vercel
+  - **Backend** hospedado no Render (Swagger disponível em `/docs`)
+- Melhor formatação das seções de **Frontend** e **Backend** no README
+
+---
+
 ## [0.3.0] - 2025-09-08
 ### Added
 - Documentação automática da API com Swagger/OpenAPI disponível em `/docs`
 - Camada de **services** para organizar regras de negócio:
- - `FeedbackService` para criação e busca de feedbacks
- - `VideoService` para listagem e detalhamento de vídeos
+  - `FeedbackService` para criação e busca de feedbacks
+  - `VideoService` para listagem e detalhamento de vídeos
 - Configuração de variáveis de ambiente (`.env`) para `PORT` e `CORS_ORIGIN`
+
+---
 
 ## [0.2.0] - 2025-09-07
 ### Added
@@ -42,12 +60,10 @@ O formato segue um estilo próximo ao [Keep a Changelog](https://keepachangelog.
 - Integração do frontend com a API usando `axios` (`src/api/index.ts`)
 - Página **Home** consumindo `GET /videos` e listando vídeos
 - Página **VideoPage** consumindo `GET /videos/:id` (versão inicial)
-- Configuração de alias `@` no `tsconfig` para facilitar imports
 
 ### Changed
 - Backend configurado para permitir CORS de `http://localhost:5173`
 - Variáveis e funções no frontend renomeadas para nomes mais claros
-- Helpers `unwrap` e `desembrulhar` criados para lidar com respostas `{ props: ... }`
 
 ### Fixed
 - Correção no `package.json` (nome inválido impedia instalação de pacotes)
