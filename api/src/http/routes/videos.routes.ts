@@ -1,4 +1,3 @@
-// src/routes/videos.routes.ts
 import { NextFunction, Request, Response, Router } from 'express'
 import { Video } from '../../domain/entities/Video'
 import { InMemoryVideoRepository } from '../../infra/db/InMemoryVideoRepository'
